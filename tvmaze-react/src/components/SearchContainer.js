@@ -13,20 +13,20 @@ class SearchContainer extends React.Component {
             sort: 'name'
         }
 
-        this.inputChange = this.inputChange.bind(this)
-        this.onSearchClick = this.onSearchClick.bind(this)
-        this.changeSortBy = this.changeSortBy.bind(this)
-        this.backToSearch = this.backToSearch.bind(this)
+        // this.inputChange = this.inputChange.bind(this)
+        // this.onSearchClick = this.onSearchClick.bind(this)
+        // this.changeSortBy = this.changeSortBy.bind(this)
+        // this.backToSearch = this.backToSearch.bind(this)
 
     }
 
-inputChange(e){
+inputChange = (e) => {
     this.setState({
         input: e.target.value
     })
 }
 
-onSearchClick(e){
+onSearchClick = (e) => {
 
     if(e.target.value.length > 0){
         this.setState({
@@ -37,13 +37,13 @@ onSearchClick(e){
     }
 }
 
-changeSortBy(e){
+changeSortBy = (e) => {
     this.setState({
         sort: e.target.value
     })
 }
 
-backToSearch(){
+backToSearch =() =>{
     this.setState({
         hasSearched: false
     })
@@ -52,7 +52,7 @@ backToSearch(){
 
 
     render(){
-
+// this is to ensure only after we click the onSearchclick button, that the results are rendered and the api is called based on the search query. Before that we don't want it to render prematurely which will result in the search query always being an empty string as per the initial state value.
 if(!this.state.hasSearched){
             return (<section>
                 <header>
@@ -68,7 +68,7 @@ if(!this.state.hasSearched){
         return (
             <div>
                <div>
-                   <button className="btn btn-secondary text-center" style={{marginLeft:'800px',marginTop:'50px'}}onClick={this.backToSearch}>Back to Search</button>
+                   <button className="btn btn-secondary text-center" style={{marginLeft:'900px',marginTop:'50px'}}onClick={this.backToSearch}>Back to Search</button>
                    <Sort onChange={this.changeSortBy} selected={this.state.sort}/>
                    <Results query={this.state.query} sort={this.state.sort}/>
                </div>

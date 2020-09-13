@@ -14,11 +14,13 @@ class Results extends React.Component{
 
     }
 
-
+//set query and sort values based on props before component mounts, so that we can call the api based on the props' query in componentdidmount since getderivedstatefromprops run before componentdidmount.
+//sort is also adjusted based on props
     static getDerivedStateFromProps(props, state) {
         return {query: props.query, sort: props.sort}
     }
 
+//we want to call the api immediately when component mounts, to ensure that the api data is accessible once the dom renders.
     componentDidMount(){
         if(this.props.query.length > 1){
             axios.get(`http://api.tvmaze.com/search/shows?q=${this.props.query}`)
@@ -38,6 +40,8 @@ class Results extends React.Component{
         }
     }
 
+//anytime when the state.sort changes, we re-render the DOM and update the res.data to the new sorted array and then set the state to that.
+//the sort function changes the parent's state.sort, this is why we compare the previous props.sort value and the changed props.sort value.
     componentDidUpdate(prevProps){
         if(prevProps.sort != this.props.sort){
             this.sortFunction(this.state.sort, this.state.results)
@@ -46,7 +50,7 @@ class Results extends React.Component{
     }
 
 
-
+//sort function
     sortFunction(sortBy,arr){
         switch(sortBy){
             case "score":
